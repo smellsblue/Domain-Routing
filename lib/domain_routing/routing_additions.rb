@@ -1,27 +1,39 @@
 module DomainRouting
   module RoutingAdditions
-    def with_domain(&block)
-      constraints DomainRouting::DomainConstraints, &block
+    def with_domain
+      constraints DomainRouting::DomainConstraints do
+        yield
+      end
     end
 
-    def without_domain(&block)
-      constraints DomainRouting::Negated::DomainConstraints, &block
+    def without_domain
+      constraints DomainRouting::Negated::DomainConstraints do
+        yield
+      end
     end
 
-    def with_subdomain(&block)
-      constraints DomainRouting::SubdomainConstraints, &block
+    def with_subdomain
+      constraints DomainRouting::SubdomainConstraints do
+        yield
+      end
     end
 
-    def without_subdomain(&block)
-      constraints DomainRouting::Negated::SubdomainConstraints, &block
+    def without_subdomain
+      constraints DomainRouting::Negated::SubdomainConstraints do
+        yield
+      end
     end
 
-    def with_domain_or_subdomain(&block)
-      constraints DomainRouting::DomainOrSubdomainConstraints, &block
+    def with_domain_or_subdomain
+      constraints DomainRouting::DomainOrSubdomainConstraints do
+        yield
+      end
     end
 
-    def without_domain_or_subdomain(&block)
-      constraints DomainRouting::Negated::DomainOrSubdomainConstraints, &block
+    def without_domain_or_subdomain
+      constraints DomainRouting::Negated::DomainOrSubdomainConstraints do
+        yield
+      end
     end
   end
 

@@ -10,11 +10,11 @@ module DomainRouting
       end
 
       def main_domains=(*values)
-        @main_domains = values
+        @main_domains = values.flatten
       end
 
       def invalid_subdomains=(*values)
-        @invalid_subdomains = values
+        @invalid_subdomains = values.flatten
       end
     end
   end

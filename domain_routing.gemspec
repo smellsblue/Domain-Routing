@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name         = "domain_routing"
-  s.version      = "0.1.1"
-  s.date         = "2011-07-24"
+  s.version      = "0.1.2"
+  s.date         = "2011-07-26"
   s.summary      = "Domain Routing"
   s.description  = "A Rails 3 gem that allows easy routing using different domains and subdomains"
   s.authors      = ["Mike Stone"]
