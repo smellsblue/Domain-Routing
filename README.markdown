@@ -31,6 +31,14 @@ config/environments/test.rb:
 
     DomainRouting::Config.main_domains = "example.org", "example.com", "test.host"
 
+If you use with_ssl and without_ssl, you can use act_as_ssl to have
+those helpers pretend like ssl is always on.  This option will do
+nothing for the secure_redirect helper, however.  It is probably wise
+to enable act_as_ssl in development and test mode, unless you set up
+https in those environments.
+
+    DomainRouting::Config.act_as_ssl = true
+
 # Usage
 
 You can then route using the routing helpers.  Note that a subdomain
@@ -65,6 +73,19 @@ exist.
     without_domain_or_subdomain do
       # Add routes that will trigger when with_domain and
       # with_subdomain would not trigger
+    end
+
+    with_ssl do
+      # Routes that trigger when the route is secure.
+    end
+
+    without_ssl do
+      # Routes that trigger when the route is not secure.
+
+      # Redirect these routes to ssl (make sure not to do this inside
+      # a with_ssl block...)
+      secure_redirect "/controller(/*path)"
+      secure_redirect :root
     end
 
 You can also retrieve the domain or subdomain that the routing methods

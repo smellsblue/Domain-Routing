@@ -35,6 +35,30 @@ module DomainRouting
         yield
       end
     end
+
+    def with_ssl
+      constraints DomainRouting::SSL do
+        yield
+      end
+    end
+
+    def without_ssl
+      constraints DomainRouting::Negated::SSL do
+        yield
+      end
+    end
+
+    def secure_redirect(route)
+      ssl = redirect do |_, request|
+        "https://#{request.host_with_port}#{request.fullpath}"
+      end
+
+      if route == :root
+        root :to => ssl
+      else
+        match route, :to => ssl
+      end
+    end
   end
 
   class DomainConstraints
@@ -55,6 +79,13 @@ module DomainRouting
     end
   end
 
+  class SSL
+    def self.matches?(request)
+      return true if DomainRouting::Config.act_as_ssl
+      request.ssl?
+    end
+  end
+
   module Negated
     class DomainConstraints
       def self.matches?(request)
@@ -71,6 +102,12 @@ module DomainRouting
     class DomainOrSubdomainConstraints
       def self.matches?(request)
         !DomainRouting::DomainOrSubdomainConstraints.matches?(request)
+      end
+    end
+
+    class SSL
+      def self.matches?(request)
+        !DomainRouting::SSL.matches?(request)
       end
     end
   end

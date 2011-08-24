@@ -1,6 +1,8 @@
 module DomainRouting
   class Config
     class << self
+      attr_accessor :act_as_ssl
+
       def main_domains
         @main_domains || []
       end
